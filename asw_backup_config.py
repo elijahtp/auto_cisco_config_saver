@@ -3,17 +3,17 @@ import time
 import socket
 from pprint import pprint
 import snoop
-@snoop
 
+
+@snoop
 def text_clear(text):
     """Удаление пунктуации"""
     import string
-    for p in string.punctuation + '\n':
+
+    for p in string.punctuation + "\n":
         if p in text:
-            text = text.replace(p, '')
+            text = text.replace(p, "")
     return text
-
-
 
 
 def send_show_command(
@@ -43,7 +43,7 @@ def send_show_command(
         time.sleep(short_pause)
         ssh.recv(max_bytes)
         result = {}
-        resultstring=""
+        resultstring = ""
         for command in commands:
             ssh.send(f"{command}\n")
             ssh.settimeout(1)
@@ -57,12 +57,34 @@ def send_show_command(
                     break
             result[command] = output
         return result
+
+
 if __name__ == "__main__":
-    devices = ["172.16.99.101","172.16.99.102","172.16.99.103","172.16.99.104","172.16.99.105","172.16.99.106","172.16.99.107","172.16.99.108","172.16.99.109","172.16.99.110","172.16.99.111","172.16.99.112","172.16.99.113","172.16.99.114","172.16.99.115","172.16.99.116","172.16.99.117", "172.16.99.118", "172.16.99.120", "172.16.99.121"]
+    devices = [
+        "172.16.99.101",
+        "172.16.99.102",
+        "172.16.99.103",
+        "172.16.99.104",
+        "172.16.99.105",
+        "172.16.99.106",
+        "172.16.99.107",
+        "172.16.99.108",
+        "172.16.99.109",
+        "172.16.99.110",
+        "172.16.99.111",
+        "172.16.99.112",
+        "172.16.99.113",
+        "172.16.99.114",
+        "172.16.99.115",
+        "172.16.99.116",
+        "172.16.99.117",
+        "172.16.99.118",
+        "172.16.99.120",
+        "172.16.99.121",
+    ]
 
     for device in devices:
         status_connection = []
-        commands = ["copy running-config tftp","172.16.99.205",""]
+        commands = ["copy running-config tftp", "172.16.99.205", ""]
         result = send_show_command(device, "user", "password", "password", commands)
         print("commands applied to switch: {}".format(device))
-
